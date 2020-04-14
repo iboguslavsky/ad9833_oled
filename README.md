@@ -9,7 +9,7 @@ CLI for Orange Pi "hat" with AD9833 frequency generator and OLED display
 
 Usage:
 ```
-$ ./freq.pl --since 1_000_000
+$ ./freq.pl --sine 1_000_000
 Waveform : sine
 Freq: 1 MHz
 ```
