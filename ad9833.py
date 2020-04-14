@@ -31,7 +31,7 @@ class AD9833(object):
         pulse = self.freq if self.shape is not 'square' else self.freq * 2
         word = hex(int(round((pulse*2**28)/self.ClockFreq)))
 
-        # Split frequency word onto its seperate bytes
+        # Split frequency word onto its separate bytes
         MSB = (int(word, 16) & 0xFFFC000) >> 14
         LSB = int(word, 16) & 0x3FFF
 
