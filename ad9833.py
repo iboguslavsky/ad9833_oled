@@ -29,18 +29,18 @@ class AD9833(object):
     def send(self):
         # Calculate frequency word to send
         pulse = self.freq if self.shape is not 'square' else self.freq * 2
-        word = hex(int(round((pulse*2**28)/self.ClockFreq)))
+        word = round((pulse*2**28)/self.ClockFreq)
 
         # Split frequency word onto its separate bytes
-        MSB = (int(word, 16) & 0xFFFC000) >> 14
-        LSB = int(word, 16) & 0x3FFF
+        msb = (word & 0xFFFC000) >> 14
+        lsb = word & 0x3FFF
 
         # Set control bits DB15 = 0 and DB14 = 1; for frequency register 0
-        MSB |= 0x4000
-        LSB |= 0x4000
+        msb |= 0x4000
+        lsb |= 0x4000
 
         xfer = [byte 
-            for word in (0x2100, LSB, MSB, SHAPE_ID[self.shape])
+            for word in (0x2100, lsb, msb, SHAPE_ID[self.shape])
                 for byte in word.to_bytes(2, 'big')]
 
         self.spi.xfer2(xfer, SPI_SPEED)
